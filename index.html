@@ -462,7 +462,11 @@
                                 your email inbox. I’ll do my best to respond as quickly as possible.
                             </p>
 
-                            <form name="contact" netlify>
+                            <form
+                                name="contact"
+                                action="https://formspree.io/f/xbldqjjq"
+                                method="POST"
+                            >
                                 <input
                                     type="text"
                                     name="name"
@@ -478,7 +482,7 @@
                                     required
                                 />
                                 <textarea
-                                    name=""
+                                    name="message"
                                     id=""
                                     placeholder="Your questions or message"
                                     required
