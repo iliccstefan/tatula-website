@@ -101,38 +101,34 @@ accordionBtns.forEach((accordion) => {
     };
 });
 
-//contact form functionality
-var form = document.getElementById('my-form');
+const form = document.getElementById('form');
 
 async function handleSubmit(event) {
     event.preventDefault();
-    var status = document.getElementById('my-form-status');
-    var data = new FormData(event.target);
-    fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            Accept: 'application/json',
-        },
-    })
-        .then((response) => {
-            if (response.ok) {
-                status.innerHTML = 'Thanks for your submission!';
-                form.reset();
-            } else {
-                response.json().then((data) => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        status.innerHTML = data['errors']
-                            .map((error) => error['message'])
-                            .join(', ');
-                    } else {
-                        status.innerHTML = 'Oops! There was a problem submitting your form';
-                    }
-                });
-            }
-        })
-        .catch((error) => {
-            status.innerHTML = 'Oops! There was a problem submitting your form';
+
+    const status = document.getElementById('my-form-status');
+    const data = new FormData(event.target);
+
+    try {
+        const response = await fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: { Accept: 'application/json' },
         });
+
+        const data = await response.json();
+
+        if (!response.ok && Object.hasOwn(data, 'errors'))
+            throw new Error(data['errors'].map((error) => error['message']).join(', '));
+
+        if (!response.ok && !Object.hasOwn(data, 'errors'))
+            throw new Error('Oops! There was a problem submitting your form');
+
+        status.innerHTML = 'Thanks for your submission!';
+
+        document.getElementById('form').reset();
+    } catch (error) {
+        status.innerHTML = error;
+    }
 }
 form.addEventListener('submit', handleSubmit);
