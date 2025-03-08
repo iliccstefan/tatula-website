@@ -328,6 +328,7 @@ nav a:hover i {
 nav .icons-container {
     padding: 0.6rem 1rem;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 nav .menu {
@@ -874,5 +875,15 @@ footer > div > div img:nth-child(2) {
 
     main#home .home-container aside {
         width: 75%;
+    }
+
+    main#contact .contact-container {
+        gap: 2rem;
+    }
+
+    main#contact .icon-container-wrapper {
+        flex-direction: column;
+        width: fit-content;
+        gap: 1rem;
     }
 }
